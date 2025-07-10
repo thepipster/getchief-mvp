@@ -1,0 +1,82 @@
+# GetChief MVP
+
+
+## Features
+
+Government officials receive a daily briefing book. This includes a copy of the day’s schedule
+and memos prepared for each key item on the schedule. Memos can include logistics,
+background information, context about the participants, talking points, and more.
+
+Develop an MVP that integrates the calendar and manages the process of building the briefing
+book. It should include an AI-native experience that allows a user to ask questions and/or gain
+insights about the calendar and briefing book process.
+
+## Code Organization
+
+- `/frontend/`: Frontend code
+- `/frontend/src/`: Frontend source code
+- `/frontend/src/components/`: React components
+- `/frontend/src/components/pages`: React pages
+- `/frontend/src/components/sections`: React sections
+- `/frontend/src/components/ui`: React UI components
+- `/frontend/src/hooks`: React hooks
+- `/frontend/src/lib`: React lib
+- `/frontend/src/app`: React app
+- `/backend/src/`: Backend source code
+- `/backend/src/routes/`: API endpoints for video, audio, and chatbot functionality
+- `/backend/src/utils/`: Utility functions and AWS client factories
+- `/backend/src/types/`: TypeScript type definitions
+- `/backend/src/errors/`: TypeScript custom error definitions
+- `/backend/src/middleware/`: TypeScript middleware definitions
+- `/backend/src/services/`: TypeScript service definitions
+- `/backend/src/config/`: TypeScript configuration definitions
+- `/backend/src/database/`: TypeScript database definitions
+
+
+## Tech Stack
+
+- NodeJS / Express / Typescript back-end
+- React / Typescript front-end
+- Firebase for user authentication
+- Postgress for database
+- Anthropic Claude for AI, using a API key.
+- TypeORM for database operations
+- Jest for testing
+- ESLint for code quality
+- Prettier for code formatting
+- Email and Teams access through indirect means, assume the user doers not have admin access to the teams or email.
+
+## Coding Standards
+- Use TypeScript for all new files
+- Follow ES6+ standards
+- Use async/await for asynchronous operations
+- Properly handle errors with try/catch blocks
+- Use proper typing for all functions and variables
+- Document all functions and classes
+- Use proper typing for all functions and variables
+
+## API Design
+- RESTful API endpoints
+- JSON request/response format
+- Proper error handling and status codes
+- Validate all incoming requests
+- Use express-async-errors to handle async errors globally
+- Allow route handlers to throw errors instead of handling them locally
+- Let the global error handler middleware catch and process all errors
+
+## Security Guidelines
+- Never hardcode AWS credentials
+- Use environment variables for sensitive information
+- Validate and sanitize all user inputs
+- Implement proper CORS settings
+
+## Testing
+- Write unit tests for critical functionality
+- Test error handling paths
+
+## Environment Variables
+- AWS_REGION: AWS region for services
+- AWS_ACCESS_KEY_ID: AWS access key
+- AWS_SECRET_ACCESS_KEY: AWS secret key
+- AWS_BEDROCK_SPEECH_MODEL_ID: Model ID for Bedrock speech services
+- CLAUDE_API_KEY: Claude API key

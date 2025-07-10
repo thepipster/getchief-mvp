@@ -1,0 +1,43 @@
+.DS_Store
+**/.DS_Store
+node_modules
+**/node_modules
+**/*.log
+dist
+**/keys
+pids
+logs
+coverage/
+run
+.nyc_output
+.basement
+config.local.js
+basement_dist
+database.ini
+
+.react-router
+
+# local env files
+.env.local
+.env.*.local
+.env
+
+# Trained models
+bin
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+yarn.lock
+package-lock.json
+
+# Editor directories and files
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+

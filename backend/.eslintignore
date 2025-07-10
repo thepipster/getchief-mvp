@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+
+# Coverage reports
+coverage/
+
+# Temp directories
+temp/
+tmp/
+
+# Logs
+logs/
+*.log
+
+# Environment variables
+.env
+.env.*
+
+# Other files to ignore
+.DS_Store
+*.md
