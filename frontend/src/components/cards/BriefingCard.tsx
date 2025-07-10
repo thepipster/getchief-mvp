@@ -16,18 +16,13 @@ export default function BriefingCard({ events }: BriefingCardProps) {
     );
 
     // Get event type color
-    const getEventTypeColor = (summary: string) => {
-        if (summary.includes('[TRAVEL]')) return 'warning';
-        if (summary.includes('[PRESS]')) return 'info';
-        if (summary.includes('[BLOCK]')) return 'secondary';
-        if (summary.includes('[SPEECH]')) return 'success';
+    const getEventTypeColor = (type: string) => {
+        if (type === 'TRAVEL') return 'warning';
+        if (type === 'PRESS') return 'info';
+        if (type === 'BLOCK') return 'secondary';
+        if (type === 'SPEECH') return 'success';
+        if (type === 'PHONE') return 'danger';
         return 'primary';
-    };
-
-    // Extract event type from summary
-    const getEventType = (summary: string) => {
-        const match = summary.match(/\[([^\]]+)\]/);
-        return match ? match[1] : 'EVENT';
     };
 
     return (
@@ -49,9 +44,9 @@ export default function BriefingCard({ events }: BriefingCardProps) {
                                 <div className="d-flex justify-content-between align-items-start mb-2">
                                     <div className="flex-grow-1">
                                         <div className="d-flex align-items-center gap-2 mb-1">
-                                            <Badge bg={getEventTypeColor(event.summary)} className="small">
-                                                {getEventType(event.summary)}
-                                            </Badge>
+                                            <Badge bg={getEventTypeColor(event.type)} className="small">
+                                                {event.type}
+                                            </Badge>    
                                             <span className="fw-bold">
                                                 {moment(event.start).format('h:mm A')} - {moment(event.end).format('h:mm A')}
                                             </span>

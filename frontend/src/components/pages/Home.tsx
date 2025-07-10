@@ -9,23 +9,23 @@ export default function Home() {
 
     const [events, setEvents] = useState<CalEventModel[]>([]);
     const [selectedDate, setSelectedDate] = useState<moment.Moment>(moment());
+    const [weekDays, setWeekDays] = useState<moment.Moment[]>([]);
 
     useEffect(() => {
         const events = CalEventModel.getSampleEvents();
+        getWeekDays(events);
         setEvents(events);
     }, []);
 
     // Generate array of weekdays (Monday through Friday) for current week
-    const getWeekDays = () => {
+    const getWeekDays = (events: CalEventModel[]) => {
         const days = [];
-        const startOfWeek = moment().startOf('isoWeek'); // ISO week starts on Monday
+        const startOfWeek = moment(events[0].start).startOf('isoWeek'); // ISO week starts on Monday
         for (let i = 0; i < 5; i++) { // Monday through Friday (5 days)
             days.push(startOfWeek.clone().add(i, 'days'));
         }
-        return days;
+        setWeekDays(days);
     };
-
-    const weekDays = getWeekDays();
 
     // Filter events for the selected date
     const getEventsForDate = (date: moment.Moment) => {
@@ -61,10 +61,10 @@ export default function Home() {
 
             {/* Two Column Layout */}
             <Row>
-                <Col lg={8} className="mb-4">
+                <Col lg={4} className="mb-4">
                     <DayViewCard events={selectedDateEvents} selectedDate={selectedDate}/>
                 </Col>
-                <Col lg={4} className="mb-4">
+                <Col lg={8} className="mb-4">
                     <BriefingCard events={selectedDateEvents} selectedDate={selectedDate}/>
                 </Col>
             </Row>

@@ -27,6 +27,7 @@ export type CalEvent = {
     location: string,
     description: string,
     url: string,
+    type: string, // TRAVEL, PRESS, BLOCK, SPEECH, PHONE
     completion: string,
     created: Moment,
     lastmodified: Moment,
@@ -59,6 +60,7 @@ export class CalEventModel {
     completion: string = "";
     created: Moment = moment();
     modified: Moment = moment();
+    type: string = "EVENT";
     //rrule?: RRule;
     //organizer: string = ""; // email of organizer
     attendee: CalAttendee[] = []; // list of attendees
@@ -91,9 +93,20 @@ export class CalEventModel {
             this.attendeeDeclined = event.attendeeDeclined || 0;
             this.status = event.status || "TENTATIVE";
             this.timezone = event.timezone || moment.tz.guess();
+            this.type = event.type || "EVENT";
         }
     }
 
+    // Extract event type from summary
+    static getEventType(summary: string) {
+        if (summary.includes('Phone Call')) return 'PHONE';
+        const match = summary.match(/\[([^\]]+)\]/);
+        return match ? match[1] : 'EVENT';
+    };
+
+    static removeEventType(summary: string) {
+        return summary.replace(/\[([^\]]+)\]/, '');
+    }
     static getSampleEvents(): CalEventModel[] {
 
         let evts: CalEventModel[] = [];
@@ -103,7 +116,7 @@ export class CalEventModel {
             const attendeeCount = attendees.length;
             const attendeeAccepted = attendees.filter(a => a.response === 'ACCEPTED').length;
             const attendeeDeclined = attendees.filter(a => a.response === 'DECLINED').length;
-
+            const eventType: string = CalEventModel.getEventType(SampleEvents[i].summary);
             const tmp: CalEvent = {
                 method: SampleEvents[i].method,
                 timezone: SampleEvents[i].timezone || "",
@@ -111,7 +124,7 @@ export class CalEventModel {
                 sequence: SampleEvents[i].sequence,
                 transparency: SampleEvents[i].transparency,
                 class: "PUBLIC", // Default value since not in sample data
-                summary: SampleEvents[i].summary,
+                summary: CalEventModel.removeEventType(SampleEvents[i].summary),
                 isAllDay: SampleEvents[i].isAllDay,
                 start: moment(SampleEvents[i].start),
                 end: moment(SampleEvents[i].end),
@@ -119,6 +132,7 @@ export class CalEventModel {
                 description: SampleEvents[i].description || "",
                 url: "", // Not in sample data
                 completion: "", // Not in sample data
+                type: eventType,
                 created: moment(SampleEvents[i].created),
                 lastmodified: moment(SampleEvents[i].lastmodified),
                 attendees: attendees,
@@ -129,6 +143,7 @@ export class CalEventModel {
                 organizer: SampleEvents[i].organizer || ""
             }
 
+            console.log(tmp);
             evts.push(new CalEventModel(tmp));
         }
         return evts;
