@@ -4,12 +4,14 @@ import moment from 'moment-timezone';
 import { CalEventModel } from '../../models/CalEventModel';
 import DayViewCard from '../cards/DayViewCard';
 import BriefingCard from '../cards/BriefingCard';
+import EventDetailsCard from '../cards/EventDetailsCard';
 
 export default function Home() {
 
     const [events, setEvents] = useState<CalEventModel[]>([]);
     const [selectedDate, setSelectedDate] = useState<moment.Moment>(moment());
     const [weekDays, setWeekDays] = useState<moment.Moment[]>([]);
+    const [selectedEvent, setSelectedEvent] = useState<CalEventModel | null>(null);
 
     useEffect(() => {
         const events = CalEventModel.getSampleEvents();
@@ -62,9 +64,16 @@ export default function Home() {
             {/* Two Column Layout */}
             <Row>
                 <Col lg={4} className="mb-4">
-                    <DayViewCard events={selectedDateEvents} selectedDate={selectedDate}/>
+                    <DayViewCard 
+                        events={selectedDateEvents} 
+                        selectedDate={selectedDate}
+                        onEventSelect={setSelectedEvent}
+                    />
                 </Col>
                 <Col lg={8} className="mb-4">
+                {selectedEvent && (
+                        <EventDetailsCard calEvent={selectedEvent}/>
+                    )}                
                     <BriefingCard events={selectedDateEvents} selectedDate={selectedDate}/>
                 </Col>
             </Row>

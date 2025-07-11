@@ -45,9 +45,9 @@ export class ClaudeHelper {
 
     }
 
-    async sendMessage(messages: ClaudeMessage[]) : Promise<string> {
+    async sendMessage(messages: ClaudeMessage[], webSearch?: boolean) : Promise<string> {
         
-        const opts:any = {
+        let opts:any = {
             model: this.config.model,
             max_tokens: this.config.maxTokens,
             temperature: this.config.temperature,
@@ -62,6 +62,15 @@ export class ClaudeHelper {
                 content: msg.content
             })),
         };
+
+        if (webSearch) {
+            opts.tools=[
+                {
+                    "type": "web_search_20250305",
+                    "name": "web_search"
+                }
+            ]
+        }
 
         Logger.debug("Sending message to Claude", opts)
         const msg = await this.anthropic.messages.create(opts);

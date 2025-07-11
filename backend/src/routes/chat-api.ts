@@ -12,6 +12,11 @@ export class ChatAPI {
 
         const { query, history, systemContext } = req.body;
 
+        let webSearch = false;
+        if (req.body.webSearch) {
+            webSearch = true;
+        }
+        
         const client = new ClaudeHelper({
             systemContext: systemContext
         });
@@ -32,7 +37,7 @@ export class ChatAPI {
         }
 
         // Send the message to Claude!
-        const claude: string = await client.sendMessage(chatHistory);
+        const claude: string = await client.sendMessage(chatHistory, webSearch);
 
         // Add claude's response to the chat history
         chatHistory.push({role: 'assistant', content: claude});

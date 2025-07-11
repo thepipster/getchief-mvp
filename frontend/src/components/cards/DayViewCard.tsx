@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { Card, Badge } from 'react-bootstrap';
 import moment from 'moment-timezone';
 import { CalEventModel } from '../../models/CalEventModel';
@@ -6,9 +6,10 @@ import { CalEventModel } from '../../models/CalEventModel';
 interface DayViewCardProps {
     events: CalEventModel[];
     selectedDate: moment.Moment;
+    onEventSelect?: (event: CalEventModel) => void;
 }
 
-export default function DayViewCard({ events, selectedDate }: DayViewCardProps) {
+export default function DayViewCard({ events, selectedDate, onEventSelect }: DayViewCardProps) {
 
     // Separate all-day events from timed events
     const allDayEvents = events.filter(event => event.isAllDay);
@@ -84,8 +85,10 @@ export default function DayViewCard({ events, selectedDate }: DayViewCardProps) 
                                         className="rounded p-2 mb-1 text-white small"
                                         style={{
                                             backgroundColor: event.status === 'CONFIRMED' ? '#198754' : '#6c757d',
-                                            fontSize: '0.8rem'
+                                            fontSize: '0.8rem',
+                                            cursor: onEventSelect ? 'pointer' : 'default'
                                         }}
+                                        onClick={() => onEventSelect?.(event)}
                                     >
                                         <div className="fw-bold">{event.summary}</div>
                                         {event.location && (
@@ -140,8 +143,10 @@ export default function DayViewCard({ events, selectedDate }: DayViewCardProps) 
                                         left: '4px',
                                         right: '4px',
                                         zIndex: 10,
-                                        overflow: 'hidden'
+                                        overflow: 'hidden',
+                                        cursor: onEventSelect ? 'pointer' : 'default'
                                     }}
+                                    onClick={() => onEventSelect?.(event)}
                                 >
                                     <Badge bg={getEventTypeColor(event.type)} className="small float-end">
                                        {event.type}
