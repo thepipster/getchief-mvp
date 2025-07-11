@@ -30,7 +30,7 @@ export default function EventDetailsCard({ calEvent }: {calEvent: CalEventModel}
 
     const eventBackgroundBot = new Agent({
         name: "Event Background Agent", 
-        webSearch: true,
+        webSearch: false,
         systemContext: `You are a assistant for the Mayor of the City of Denver. You are given the details of a single event and your task is to provide 
         background information about the event. Extract entities from the event description such as people, organizations, and locations. Attempt to find
         any relevant press clippings and other information about the event (from press sources suc as the Denver Post, Denver Business Journal, etc). You return all results in JSON format 
@@ -51,6 +51,8 @@ export default function EventDetailsCard({ calEvent }: {calEvent: CalEventModel}
     async function updateBrief(){
         setIsLoading(true);
         try {
+            // We don't need to remember the chat history for this
+            eventBackgroundBot.clearHistory();
             let resp:string = await eventBackgroundBot.ask(`Please provide background information on the following event: ${JSON.stringify(calEvent)}`);
 
             console.log(resp)

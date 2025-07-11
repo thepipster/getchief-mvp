@@ -5,6 +5,7 @@ import { CalEventModel } from '../../models/CalEventModel';
 import DayViewCard from '../cards/DayViewCard';
 import BriefingCard from '../cards/BriefingCard';
 import EventDetailsCard from '../cards/EventDetailsCard';
+import ChatCard from '../cards/ChatCard';
 
 export default function Home() {
 
@@ -40,7 +41,6 @@ export default function Home() {
 
     return (
         <div className="container-fluid mt-4">
-            <h1 className="mb-4 text-center">Daily Briefing</h1>
 
             {/* Day Selector */}
             <div className="mb-4 d-flex justify-content-center">
@@ -63,19 +63,22 @@ export default function Home() {
 
             {/* Two Column Layout */}
             <Row>
-                <Col lg={4} className="mb-4">
+                <Col lg={3} className="mb-4">
                     <DayViewCard 
                         events={selectedDateEvents} 
                         selectedDate={selectedDate}
                         onEventSelect={setSelectedEvent}
                     />
                 </Col>
-                <Col lg={8} className="mb-4">
-                {selectedEvent && (
-                        <EventDetailsCard calEvent={selectedEvent}/>
-                    )}                
+                <Col lg={5} className="mb-4">
                     <BriefingCard events={selectedDateEvents} selectedDate={selectedDate}/>
                 </Col>
+                <Col lg={4} className="mb-4">
+                    {selectedEvent && (
+                        <EventDetailsCard calEvent={selectedEvent}/>
+                    )}                
+                    <ChatCard events={selectedDateEvents} selectedDate={selectedDate}/>
+                </Col>                
             </Row>
         </div>
     );

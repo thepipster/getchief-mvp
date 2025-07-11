@@ -10,6 +10,14 @@ interface BriefingCardProps {
     selectedDate: moment.Moment;
 }
 
+// Create an instance of each agent we want to use;
+export const briefingBot = new Agent({
+    name: "Briefing Agent", 
+    systemContext: `You are a assistant for the Mayor of the City of Denver. 
+You are given a list of events for the day and your task is to create a briefing for the mayor. Provide an executive summary and a detailed briefing. 
+Identify key people, organizations, and locations from the events and provide advice. You do not need to provide a list of events.`
+});
+
 
 export default function BriefingCard({ events, selectedDate }: BriefingCardProps) {
     
@@ -20,27 +28,12 @@ export default function BriefingCard({ events, selectedDate }: BriefingCardProps
         moment(a.start).valueOf() - moment(b.start).valueOf()
     );
 
-    // Create an instance of each agent we want to use;
-    const briefingBot = new Agent({
-        name: "Briefing Agent", 
-        systemContext: `You are a assistant for the Mayor of the City of Denver. 
-You are given a list of events for the day and your task is to create a briefing for the mayor. Provide an executive summary and a detailed briefing. 
-Identify key people, organizations, and locations from the events and provide advice.`
-    });
-
 
     function createContext(): string {
         let context = "";
         for (let i=0; i<sortedEvents.length; i++) {
             const event: CalEventModel = sortedEvents[i];
-            context += JSON.stringify(event);
-            /*
-            context += "";
-            context += event.summary + "\n";
-            if (event.description) {
-                context += event.description + "\n";
-            }
-                */
+            context += event.getContext();
             context += "\n";
         }
         return context;
@@ -54,7 +47,7 @@ Identify key people, organizations, and locations from the events and provide ad
                 return;
             }            
             const briefing = await briefingBot.ask(`Please create a briefing for the mayor. 
-The events for the day are: ${createContext()}`);
+The events for the day are provided below:`, createContext());
             setBriefing(briefing);
         } catch (error) {
             console.error('Error generating briefing:', error);
@@ -64,7 +57,9 @@ The events for the day are: ${createContext()}`);
         }
     }
 
+    // Called if the selected date changes
     useEffect(() => {
+        briefingBot.clearHistory();        
         updateBrief();
     }, [selectedDate, events]);
 

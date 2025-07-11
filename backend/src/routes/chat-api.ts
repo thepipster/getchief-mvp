@@ -16,7 +16,7 @@ export class ChatAPI {
         if (req.body.webSearch) {
             webSearch = true;
         }
-        
+
         const client = new ClaudeHelper({
             systemContext: systemContext
         });

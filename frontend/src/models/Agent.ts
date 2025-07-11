@@ -1,10 +1,10 @@
 import * as _ from "lodash"
 import BaseModel from "./BaseModel"
 
-type AgentMessage = {
+export type AgentMessage = {
     role: string; // 'user' | 'assistant' | 'system';configuration
     content: string;
-    context?: string; // Optional context for RAG
+    context?: string;
     timestamp?: string; // Optional timestamp
 }
 
@@ -47,13 +47,18 @@ export class Agent {
         this.webSearch = webSearch;
     }
 
+    getChatHistory(): AgentMessage[] {
+        return this.messages;
+    }
+
+
+        
     /**
      * Send a qustion to the agent (the LLM) and get a response. The agent keeps track of the chat history.
      * @param query The user question
-     * @param context (optional) Additional context to provide to the agent, e.g. results of a RAG search.
      * @returns The agent's response
      */
-    async ask(query: string, context: string = ""): Promise<string> {
+    async ask(query: string, context?: string): Promise<string> {
 
         if (!query || query.trim() === '') {
             throw new Error('User question cannot be empty');
@@ -65,15 +70,14 @@ export class Agent {
             this.messages.push({
                 role: "user",
                 content: query,
-                context,
                 timestamp: new Date().toISOString()
             });
 
             const payload = {
-                query: query.trim(),
+                query: query.trim() + (context ? `\nContext: ${context}` : ""),
                 systemContext: this.systemContext,
                 history: this.messages,
-                webSearch: this.webSearch
+                webSearch: this.webSearch,
             };
 
             console.log(`Sending query to agent ${this.name}: ${query}`, payload);

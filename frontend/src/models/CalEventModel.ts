@@ -97,14 +97,37 @@ export class CalEventModel {
         }
     }
 
+    /**
+     * Get the context for the event, this is used to provide context to the agent
+     * @returns The context for the event
+     */
+    getContext(): string {
+        return JSON.stringify({
+            summary: this.summary,
+            description: this.description,
+            start: this.start.format('YYYY-MM-DD HH:mm:ss'),
+            end: this.end.format('YYYY-MM-DD HH:mm:ss'),
+            location: this.location,
+            type: this.type,
+            attendeeCount: this.attendeeCount,
+            attendeeAccepted: this.attendeeAccepted,
+            attendeeDeclined: this.attendeeDeclined,
+            status: this.status,
+            timezone: this.timezone,
+            //created: this.created.format('YYYY-MM-DD HH:mm:ss'),
+            //modified: this.modified.format('YYYY-MM-DD HH:mm:ss'),
+            attendee: this.attendee
+        });
+    }
+
     // Extract event type from summary
-    static getEventType(summary: string) {
+    private static getEventType(summary: string) {
         if (summary.includes('Phone Call')) return 'PHONE';
         const match = summary.match(/\[([^\]]+)\]/);
         return match ? match[1] : 'EVENT';
     };
 
-    static removeEventType(summary: string) {
+    private static removeEventType(summary: string) {
         return summary.replace(/\[([^\]]+)\]/, '');
     }
     static getSampleEvents(): CalEventModel[] {
