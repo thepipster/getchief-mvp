@@ -18,7 +18,7 @@ interface AxiosError<T = any> {
 
 let base_url = process.env.REACT_APP_API_URL || import.meta.env.VITE_API_URL;
 if (!base_url) {
-    base_url = "http://localhost:23646";
+    base_url = "http://localhost:4374";
 }
 
 export type SendOptions = {

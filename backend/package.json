@@ -15,6 +15,7 @@
     "test": "jest --showSeed"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.56.0",
     "@aws-sdk/client-bedrock-runtime": "^3.817.0",
     "@aws-sdk/client-rekognition": "^3.474.0",
     "@aws-sdk/client-sts": "^3.808.0",

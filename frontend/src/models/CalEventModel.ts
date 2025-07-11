@@ -143,7 +143,7 @@ export class CalEventModel {
                 organizer: SampleEvents[i].organizer || ""
             }
 
-            console.log(tmp);
+            //console.log(tmp);
             evts.push(new CalEventModel(tmp));
         }
         return evts;
