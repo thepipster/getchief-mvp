@@ -74,9 +74,7 @@ export default function Home() {
                     <BriefingCard events={selectedDateEvents} selectedDate={selectedDate}/>
                 </Col>
                 <Col lg={4} className="mb-4">
-                    {selectedEvent && (
-                        <EventDetailsCard calEvent={selectedEvent}/>
-                    )}                
+                    <EventDetailsCard calEvent={selectedEvent}/>
                     <ChatCard events={selectedDateEvents} selectedDate={selectedDate}/>
                 </Col>                
             </Row>

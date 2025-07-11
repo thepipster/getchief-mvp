@@ -18,7 +18,7 @@ export type EventBackground = {
     ]
 };
 
-export default function EventDetailsCard({ calEvent }: {calEvent: CalEventModel}) {
+export default function EventDetailsCard({ calEvent }: {calEvent: CalEventModel | null}) {
     
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [eventBackground, setEventBackground] = useState<EventBackground>({
@@ -99,6 +99,7 @@ export default function EventDetailsCard({ calEvent }: {calEvent: CalEventModel}
             </Card.Header>
             
             <Card.Body>
+
 
                 {isLoading ? (
                     <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '200px' }}>

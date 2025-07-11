@@ -6,7 +6,7 @@ export class AuthError extends Error {
 
     code: number = 401;
 
-    constructor(...args) {
+    constructor(...args: any[]) {
         super(...args);
         Error.captureStackTrace(this, AuthError);
     }

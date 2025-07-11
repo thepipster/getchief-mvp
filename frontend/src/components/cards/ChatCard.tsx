@@ -30,12 +30,6 @@ export default function ChatCard({ selectedDate, events }: ChatCardProps) {
     questions about the events and entities, and provide advice.`
     });
 
-
-    // Scroll to bottom of messages
-    useEffect(() => {
-        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, [messages]);
-
     useEffect(() => {   
         chatBot.clearHistory();
 //        chatBot.setSystemContext(`You are a assistant for the Mayor of the City of Denver. You are given a list of events for the day 

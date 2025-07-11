@@ -69,7 +69,7 @@ The events for the day are provided below:`, createContext());
                 <h5 className="mb-0">Daily Briefing</h5>
                 <Badge bg="light" text="dark">{events.length} events</Badge>
             </Card.Header>
-            <Card.Body style={{ maxHeight: '600px', overflowY: 'auto' }} className="h-100">
+            <Card.Body style={{ minHeight: '600px', overflowY: 'auto' }} className="h-100">
                 {isLoading ? (
                     <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '200px' }}>
                         <div className="text-center">

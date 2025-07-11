@@ -5,7 +5,7 @@ export type AgentMessage = {
     role: string; // 'user' | 'assistant' | 'system';configuration
     content: string;
     context?: string;
-    timestamp?: string; // Optional timestamp
+    //timestamp?: string; // Optional timestamp
 }
 
 export class Agent {
@@ -28,7 +28,7 @@ export class Agent {
                 this.webSearch = options.webSearch;
             }
         }
-        console.log(`Created agent ${this.name} with system context: ${this.systemContext}`)
+        //console.log(`Created agent ${this.name} with system context: ${this.systemContext}`)
     }
 
     clearHistory() {
@@ -70,7 +70,7 @@ export class Agent {
             this.messages.push({
                 role: "user",
                 content: query,
-                timestamp: new Date().toISOString()
+                //timestamp: new Date().toISOString()
             });
 
             const payload = {
@@ -80,7 +80,7 @@ export class Agent {
                 webSearch: this.webSearch,
             };
 
-            console.log(`Sending query to agent ${this.name}: ${query}`, payload);
+            //console.log(`Sending query to agent ${this.name}: ${query}`, payload);
 
             type ChatResponse = {
                 response: string,

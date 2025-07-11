@@ -7,5 +7,6 @@ export default defineConfig({
   plugins: [tsconfigPaths()],
   define: {
     'process.env.REACT_APP_API_URL': JSON.stringify(process.env.REACT_APP_API_URL),
+    'process.env.REACT_APP_API_KEY': JSON.stringify(process.env.REACT_APP_API_KEY),
   }
 });

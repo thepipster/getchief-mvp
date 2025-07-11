@@ -6,7 +6,8 @@ import cors from 'cors';
 import fileUpload from 'express-fileupload';
 import { Logger } from './utils/Logger';
 import { ChatAPI } from './routes/chat-api';
-
+import { StatusApi } from './routes/status-api';
+import { AuthAPI } from './routes/auth-api';
 // Setup config
 dotenv.config();
 
@@ -23,7 +24,8 @@ app.use(fileUpload({
     limits: { fileSize: 50 * 1024 * 1024 } // 50MB max file size
 }));
 
-app.post('/agent/ask', ChatAPI.askAgent);
+app.get('/status', StatusApi.get);
+app.post('/agent/ask', AuthAPI.isUser, ChatAPI.askAgent);
 
 // Define error handling middleware
 const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
