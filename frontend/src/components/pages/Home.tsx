@@ -68,6 +68,7 @@ export default function Home() {
                         events={selectedDateEvents} 
                         selectedDate={selectedDate}
                         onEventSelect={setSelectedEvent}
+                        selectedEvent={selectedEvent}
                     />
                 </Col>
                 <Col lg={5} className="mb-4">

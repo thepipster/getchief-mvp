@@ -166,9 +166,29 @@ export default function DayViewCard({ events, selectedDate, onEventSelect, selec
                                         height: `${height}px`,
                                         left: '4px',
                                         right: '4px',
-                                        zIndex: 10,
+                                        zIndex: isEventSelected(event) ? 20 : 10,
                                         overflow: 'hidden',
-                                        cursor: onEventSelect ? 'pointer' : 'default'
+                                        cursor: onEventSelect ? 'pointer' : 'default',
+                                        opacity: isEventSelected(event) ? 1 : 0.9,
+                                        transform: isEventSelected(event) ? 'scale(1.02)' : 'scale(1)',
+                                        boxShadow: isEventSelected(event) ? '0 4px 8px rgba(0,0,0,0.3)' : 'none',
+                                        transition: 'all 0.2s ease-in-out'
+                                    }}
+                                    onMouseEnter={(e) => {
+                                        if (!isEventSelected(event)) {
+                                            e.currentTarget.style.opacity = '1';
+                                            e.currentTarget.style.transform = 'scale(1.01)';
+                                            e.currentTarget.style.boxShadow = '0 2px 4px rgba(0,0,0,0.2)';
+                                            e.currentTarget.style.zIndex = '15';
+                                        }
+                                    }}
+                                    onMouseLeave={(e) => {
+                                        if (!isEventSelected(event)) {
+                                            e.currentTarget.style.opacity = '0.9';
+                                            e.currentTarget.style.transform = 'scale(1)';
+                                            e.currentTarget.style.boxShadow = 'none';
+                                            e.currentTarget.style.zIndex = '10';
+                                        }
                                     }}
                                     onClick={() => onEventSelect?.(event)}
                                 >
