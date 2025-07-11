@@ -89,6 +89,26 @@ export default function EventDetailsCard({ calEvent }: {calEvent: CalEventModel 
         }
     };
 
+    // Show empty state if no event is selected
+    if (!calEvent) {
+        return (
+            <Card className="mb-3">
+                <Card.Header>
+                    <h6 className="mb-0">Event Details</h6>
+                </Card.Header>
+                <Card.Body>
+                    <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '200px' }}>
+                        <div className="text-center text-muted">
+                            <i className="bi bi-calendar-event" style={{ fontSize: '2rem' }}></i>
+                            <div className="mt-2">Select an event to view details</div>
+                            <small>Click on any event in the calendar to see AI-generated background information</small>
+                        </div>
+                    </div>
+                </Card.Body>
+            </Card>
+        );
+    }
+
     return (
         <Card className="mb-3">
             <Card.Header className="d-flex justify-content-between align-items-center">

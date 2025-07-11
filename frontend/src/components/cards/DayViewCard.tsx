@@ -7,13 +7,19 @@ interface DayViewCardProps {
     events: CalEventModel[];
     selectedDate: moment.Moment;
     onEventSelect?: (event: CalEventModel) => void;
+    selectedEvent?: CalEventModel | null;
 }
 
-export default function DayViewCard({ events, selectedDate, onEventSelect }: DayViewCardProps) {
+export default function DayViewCard({ events, selectedDate, onEventSelect, selectedEvent }: DayViewCardProps) {
 
     // Separate all-day events from timed events
     const allDayEvents = events.filter(event => event.isAllDay);
     const timedEvents = events.filter(event => !event.isAllDay);
+
+    // Helper function to check if an event is selected
+    const isEventSelected = (event: CalEventModel) => {
+        return selectedEvent && selectedEvent.uid === event.uid;
+    };
 
     // Generate time slots for the day (6 AM to 11 PM in 30-minute intervals)
     const generateTimeSlots = () => {
@@ -86,7 +92,25 @@ export default function DayViewCard({ events, selectedDate, onEventSelect }: Day
                                         style={{
                                             backgroundColor: event.status === 'CONFIRMED' ? '#198754' : '#6c757d',
                                             fontSize: '0.8rem',
-                                            cursor: onEventSelect ? 'pointer' : 'default'
+                                            cursor: onEventSelect ? 'pointer' : 'default',
+                                            opacity: isEventSelected(event) ? 1 : 0.9,
+                                            transform: isEventSelected(event) ? 'scale(1.02)' : 'scale(1)',
+                                            boxShadow: isEventSelected(event) ? '0 4px 8px rgba(0,0,0,0.2)' : 'none',
+                                            transition: 'all 0.2s ease-in-out'
+                                        }}
+                                        onMouseEnter={(e) => {
+                                            if (!isEventSelected(event)) {
+                                                e.currentTarget.style.opacity = '1';
+                                                e.currentTarget.style.transform = 'scale(1.01)';
+                                                e.currentTarget.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+                                            }
+                                        }}
+                                        onMouseLeave={(e) => {
+                                            if (!isEventSelected(event)) {
+                                                e.currentTarget.style.opacity = '0.9';
+                                                e.currentTarget.style.transform = 'scale(1)';
+                                                e.currentTarget.style.boxShadow = 'none';
+                                            }
                                         }}
                                         onClick={() => onEventSelect?.(event)}
                                     >
